@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Witd:WITD application="Work item type editor" version="1.0" xmlns:Witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">
+  <WORKITEMTYPE name="Team">
+    <DESCRIPTION>A team.</DESCRIPTION>
+    <FIELDS>
+      <FIELD name="Title" refname="System.Title" type="String" reportable="dimension" />
+      <FIELD name="State" refname="System.State" type="String" reportable="dimension" />
+      <FIELD name="Rev" refname="System.Rev" type="Integer" reportable="dimension" />
+      <FIELD name="Changed By" refname="System.ChangedBy" type="String" syncnamechanges="true" reportable="dimension" />
+      <FIELD name="Reason" refname="System.Reason" type="String" reportable="dimension" />
+      <FIELD name="Iteration Path" refname="System.IterationPath" type="TreePath" reportable="dimension" />
+      <FIELD name="Iteration ID" refname="System.IterationId" type="Integer" />
+      <FIELD name="Assigned To" refname="System.AssignedTo" type="String" syncnamechanges="true" reportable="dimension" />
+      <FIELD name="Work Item Type" refname="System.WorkItemType" type="String" reportable="dimension" />
+      <FIELD name="Integration Build" refname="Microsoft.VSTS.Build.IntegrationBuild" type="String" reportable="dimension" />
+      <FIELD name="Created Date" refname="System.CreatedDate" type="DateTime" reportable="dimension" />
+      <FIELD name="Created By" refname="System.CreatedBy" type="String" syncnamechanges="true" reportable="dimension" />
+      <FIELD name="Description" refname="System.Description" type="PlainText" />
+      <FIELD name="Description HTML" refname="Microsoft.VSTS.Common.DescriptionHtml" type="HTML" />
+      <FIELD name="History" refname="System.History" type="History" />
+      <FIELD name="Retrospective" refname="Microsoft.VSTS.Common.Retrospective" type="HTML" />
+      <FIELD name="External Link Count" refname="System.ExternalLinkCount" type="Integer" />
+      <FIELD name="Related Link Count" refname="System.RelatedLinkCount" type="Integer" />
+      <FIELD name="Team Project" refname="System.TeamProject" type="String" reportable="dimension" />
+      <FIELD name="Hyperlink Count" refname="System.HyperLinkCount" type="Integer" />
+      <FIELD name="Attached File Count" refname="System.AttachedFileCount" type="Integer" />
+      <FIELD name="Node Name" refname="System.NodeName" type="String" />
+      <FIELD name="Area Path" refname="System.AreaPath" type="TreePath" reportable="dimension" />
+      <FIELD name="Revised Date" refname="System.RevisedDate" type="DateTime" reportable="detail" />
+      <FIELD name="Changed Date" refname="System.ChangedDate" type="DateTime" reportable="dimension" />
+      <FIELD name="ID" refname="System.Id" type="Integer" reportable="dimension" />
+      <FIELD name="Area ID" refname="System.AreaId" type="Integer" />
+      <FIELD name="Authorized As" refname="System.AuthorizedAs" type="String" syncnamechanges="true" />
+      <FIELD name="Mean Velocity" refname="JCI.VSTS.MeanVelocity" type="Double" reportable="dimension" />
+    </FIELDS>
+    <WORKFLOW>
+      <STATES>
+        <STATE value="Created" />
+        <STATE value="Removed" />
+      </STATES>
+      <TRANSITIONS>
+        <TRANSITION from="" to="Created">
+          <REASONS>
+            <DEFAULTREASON value="New" />
+          </REASONS>
+          <FIELDS>
+            <FIELD refname="Microsoft.VSTS.Common.Retrospective">
+              <DEFAULT from="value" value="&lt;h5&gt;What worked?&lt;/h5&gt;&lt;h5&gt;What didn't work?&lt;/h5&gt;&lt;h5&gt;What will we do differently?&lt;/h5&gt;" />
+            </FIELD>
+          </FIELDS>
+        </TRANSITION>
+        <TRANSITION from="Created" to="Removed">
+          <REASONS>
+            <DEFAULTREASON value="Removed" />
+          </REASONS>
+        </TRANSITION>
+      </TRANSITIONS>
+    </WORKFLOW>
+    <FORM>
+      <Layout>
+        <Group>
+          <Column PercentWidth="100">
+            <Control FieldName="System.Title" Type="FieldControl" Label="&amp;Title:" LabelPosition="Left" />
+          </Column>
+        </Group>
+        <Group Margin="(0,5,0,0)">
+          <Column PercentWidth="50">
+            <Group Label="Details">
+              <Column PercentWidth="100">
+                <Control FieldName="System.State" Type="FieldControl" Label="&amp;State:" LabelPosition="Left" />
+                <Control FieldName="JCI.VSTS.MeanVelocity" Type="FieldControl" Label="&amp;Mean Velocity:" LabelPosition="Left" />
+              </Column>
+            </Group>
+          </Column>
+          <Column PercentWidth="50">
+            <TabGroup>
+              <Tab Label="History">
+                <Control FieldName="System.History" Type="WorkItemLogControl" Label="" LabelPosition="Top" Dock="Fill" />
+              </Tab>
+              <Tab Label="Attachments">
+                <Control Type="AttachmentsControl" Label="" LabelPosition="Top" Dock="Fill" />
+              </Tab>
+            </TabGroup>
+          </Column>
+        </Group>
+      </Layout>
+    </FORM>
+  </WORKITEMTYPE>
+</Witd:WITD>

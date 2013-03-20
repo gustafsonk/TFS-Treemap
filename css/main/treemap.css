@@ -1,0 +1,439 @@
+/* <----------------------BEGIN--- GENERAL ------------------------------> */
+/* Full screen, resizable webpage with no browser-based padding/margins. */
+body {
+    background-color:#111; /* Make the non-treemap background off-black. */
+    font-family:Verdana, sans-serif; /* Font to use for non-jQuery UI things. */
+    font-size:12px;
+    margin:0;
+    padding:0;
+}
+
+/* Remove the default borders and center the tables. */
+.table-default {
+    border-collapse:collapse;
+    margin:auto;
+}
+
+/* Repositioning of elements. */
+.center {
+    text-align:center;
+}
+
+.right {
+    text-align:right;
+}
+
+/* Keep border math simple in certain places. */
+#loading, .node, .tip {
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+/* <-----------------------END---- GENERAL ------------------------------> */
+
+
+/* <----------------------BEGIN--- TOOLBAR ------------------------------> */
+#toolbar {
+    border:none; /* Overrides jQuery UI's ui-widget-content. */
+    bottom:0; /* Allows for vertical scrolling when screen height is too short. */
+    overflow:auto; /* Show vertical/horizontal scrollbars if needed. */
+    padding:5px;
+    position:fixed; /* Hovers over the treemap as the page scrolls. */
+    top:0; /* Allows for vertical scrolling when screen height is too short. */
+    width:180px; /* Also update #main's left if this changes. */
+    z-index:100000; /* Show above anything in #main. */
+}
+
+/* Add spacing to the toolbar header. */
+#toolbar-header {
+    padding:.4em 1em;
+}
+
+/* Fix the cursor for href-less anchor tags. */
+#toolbar-menu li {
+    cursor:pointer;
+}
+
+/* Groupings in the toolbar. */
+legend {
+    color:inherit; /* IE9 needs this. */
+    font-weight:bold;
+}
+
+/* Space the groupings out a bit. */
+fieldset {
+    margin-top:12px;
+}
+
+/* Hide/show groupings depending on what's being displayed. */
+.toolbar-hidable {
+    display:none;
+}
+/* <-----------------------END---- TOOLBAR ------------------------------> */
+
+
+/* <----------------------BEGIN--- BREADCRUMB TRAIL ------------------------------> */
+#breadcrumb-list {
+	list-style:none; /* No bullet points. */
+	margin:0;
+	padding:0;
+}
+
+#breadcrumb li {
+    cursor:pointer; /* Fix the cursor for href-less anchor tags. */
+    float:left; /* Attempt to keep it all on one line. */
+	padding:4px;
+	white-space:nowrap; /* Attempt to keep it all on one line. */
+}
+
+/* Align the first crumb with the treemap. */
+#breadcrumb li:first-child {
+    margin-left:2px;
+}
+/* <-----------------------END---- BREADCRUMB TRAIL ------------------------------> */
+
+
+/* <----------------------BEGIN--- TREEMAP ------------------------------> */
+/* Defines a background container for the treemap. */
+#main {
+    background-color:black;
+    left:190px; /* #toolbar width + #toolbar padding-left + #toolbar padding-right */
+    position:relative;
+}
+
+/* Disable the text highlighting visual effect. */
+#treemap {
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none; /* IE 10+ */
+    user-select:none; /* Prevents some graphical annoyances with text selection. */
+}
+
+/* The loading message properties. */
+#loading {
+    background-color:black;
+    border:1px solid white;
+    color:white;
+    display:none;
+    padding:10px;
+    position:fixed;
+    z-index:1000000;
+}
+
+/* Information for the individual 'squares'. */
+.node {
+    border:2px solid transparent;
+    cursor:pointer;
+    font-weight:bold;
+    overflow:hidden;
+    padding:0 2px;
+    word-wrap:break-word;
+}
+
+/* Handle labels that are titles specifically. */
+.title-label {
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+/* <-----------------------END---- TREEMAP ------------------------------> */
+
+
+/* <----------------------BEGIN--- TREEMAP TOOLTIPS ------------------------------> */
+.tip {
+    background-color:black;
+    border:1px solid white;
+    box-shadow:2px 2px 8px #555;
+    color:white;
+    max-width:300px;
+    padding:5px 10px;
+    word-wrap:break-word;
+}
+
+.tip-type {
+    font-style:italic;
+}
+
+.tip-title {
+    font-weight:bold;
+    text-align:center;
+}
+
+.tip table {
+    border-collapse:collapse;
+    margin:5px auto;
+}
+
+.tip td {
+    border:1px solid white;
+    padding:5px;
+    text-align:center;
+}
+/* <-----------------------END---- TREEMAP TOOLTIPS ------------------------------> */
+
+
+/* <----------------------BEGIN--- JQUERY UI DROPDOWNS ------------------------------> */
+/* Need a set width before it's selectmenu'fied. */
+#depth-setting, #label-setting {
+    width:64px;
+}
+
+/* Adjust the height of the selectmenu version. */
+#depth-setting-button, #label-setting-button {
+    height:25px;
+}
+
+/* Change the position of the dropdown icon. */
+.ui-selectmenu-icon {
+    right:3px;
+}
+
+/* Fix the cursor for href-less anchor tags. */
+.ui-selectmenu, .ui-selectmenu-menu {
+    cursor:pointer;
+}
+
+/* Customize the spacing on some jQuery UI elements. */
+.ui-selectmenu-status, .ui-textfield {
+    padding:3px 7px;
+}
+/* <-----------------------END---- JQUERY UI DROPDOWNS ------------------------------> */
+
+
+/* <----------------------BEGIN--- JQUERY UI OTHER FIXES ------------------------------> */
+/* Radio buttons look too fat. */
+.radio-buttons .ui-button-text {
+    padding:3px 7px 5px;
+}
+
+/* Icon buttons look too fat. */
+.icon-button .ui-button-text {
+    padding:3px 7px 5px 1.8em;
+}
+
+/* Space out a button's icon from its text. */
+.icon-button span:first-child {
+    margin-left:-3px;
+}
+
+/* I don't like the extra space added to disabled items. */
+.ui-menu .ui-state-disabled {
+    margin:0 !important;
+}
+
+/* Make textfields blend in with jQuery UI better. */
+.ui-textfield {
+    background:transparent;
+    color:inherit;
+    font:inherit;
+}
+
+/* Fix the jQuery UI z-index for dialogs to always show above the toolbar and treemap. */
+.ui-front {
+    z-index:1000000 !important;
+}
+
+/* Always show the select menu above a dialog. */
+.ui-selectmenu-open {
+    z-index:2000000 !important;
+}
+/* <-----------------------END---- JQUERY UI OTHER FIXES ------------------------------> */
+
+
+/* <----------------------BEGIN--- DIALOG ELEMENTS ------------------------------> */
+/* Space out the buttons in the load and build dialogs. */
+#load-dialog button, #build-dialog button {
+    margin:10px 5px 5px;
+}
+
+/* Textbox and button in the save dialog. */
+#save-name, #tree-save {
+    margin:10px;
+}
+
+/* A message for indicating a save error. */
+#save-error-message {
+    color:red;
+    font-size:80%;
+    word-wrap:break-word;
+}
+/* <-----------------------END---- DIALOG ELEMENTS ------------------------------> */
+
+
+/* <----------------------BEGIN--- LAYOUT BUTTON ICONS ------------------------------> */
+/* Load my own icons and the icon swapping behavior. */
+.custom-icon {
+    background:url(icons.png) no-repeat;
+    display:block;
+    height:22px;
+    margin:5px 1px 3px;
+    width:22px;
+}
+
+/* Square icon states. */
+.custom-icon.square {
+    background-position:0 0;
+}
+
+.custom-icon.square.hover {
+    background-position:0 -24px;
+}
+
+.custom-icon.square.active {
+    background-position:0 -48px;
+}
+
+/* Row icon states. */
+.custom-icon.row {
+    background-position:-24px 0;
+}
+
+.custom-icon.row.hover {
+    background-position:-24px -24px;
+}
+
+.custom-icon.row.active {
+    background-position:-24px -48px;
+}
+
+/* Column icon states. */
+.custom-icon.column {
+    background-position:-48px 0;
+}
+
+.custom-icon.column.hover {
+    background-position:-48px -24px;
+}
+
+.custom-icon.column.active {
+    background-position:-48px -48px;
+}
+/* <-----------------------END---- LAYOUT BUTTON ICONS ------------------------------> */
+
+
+/* <----------------------BEGIN--- SLICKGRID ------------------------------> */
+/* The treemap building table. */
+#slick-grid {
+    border-left:1px solid silver; /* Looks more consistent with a left border. */
+    margin:0 auto; /* Horizontally center the grid. */
+    width:430px; /* A sum of the column widths. */
+}
+
+/* The cell editor for several columns in the building table. */
+#edit-select-button {
+    height:27px; /* row height - 3 */
+    margin:-4px 0 0 -2px; /* Center the editor in the cell. */
+    text-align:left; /* Make the dropdown align left unlike the text in the grid. */
+}
+
+/* Make the text align center. */
+.slick-header-column, .slick-cell {
+    text-align:center;
+}
+
+/* Customize the look of the cell content. */
+.slick-cell {
+    border-right:1px solid silver; /* Override SlickGrid's dotted lines. */
+    padding-top:3px; /* Try to vertically align the content 'correctly'. */
+}
+
+/* Override SlickGrid's editable cell formatting. */
+.slick-cell.editable {
+    background:transparent;
+    border-color:transparent silver silver transparent;
+}
+
+/* The box that appears when you begin dragging a row. */
+.slick-reorder-proxy {
+    background:white;
+}
+
+/* The line that appears when a drag will actually do something. */
+.slick-reorder-guide {
+    background:lime;
+}
+
+/* The cursor that appears when a drag can occur. */
+.cell-move:hover {
+    cursor:move;
+}
+
+/* Override cell-move behavior for the last row. */
+.unmovable-cell {
+    cursor:default !important;
+}
+/* <-----------------------END---- SLICKGRID ------------------------------> */
+
+
+/* <----------------------BEGIN--- JSTREE ------------------------------> */
+/* Fix the cursor for href-less anchor tags. */
+.jstree a {
+    cursor:pointer;
+}
+
+/* Prevent long lines of text from overflowing the area. */
+.jstree {
+    overflow:auto;
+}
+
+/* Override the anchor tag behavior for the loading message. */
+.jstree-loading {
+    cursor:default !important;
+}
+
+/* Make the icons look better. */
+.jstree-checkbox {
+    height:14px;
+    padding-right:3px !important;
+    width:14px;
+}
+
+/* Checked icon. */
+.jstree-checked > a > .jstree-checkbox {
+    background:url("../jquery-ui/trontastic/images/ui-icons_b8ec79_256x240.png") no-repeat -64px -144px;
+}
+
+/* Undetermined icon. */
+.jstree-undetermined > a > .jstree-checkbox {
+    background:url("../jquery-ui/trontastic/images/ui-icons_ffffff_256x240.png") no-repeat -48px -144px;
+}
+
+/* Unchecked icon. */
+.jstree-unchecked > a > .jstree-checkbox {
+    background:url("../jquery-ui/trontastic/images/ui-icons_cd0a0a_256x240.png") no-repeat -80px -128px;
+}
+/* <-----------------------END---- JSTREE ------------------------------> */
+
+
+/* <----------------------BEGIN--- BROWSER WARNING ------------------------------> */
+/* Make it look good in IE7+. */
+#browser-warning {
+    background:pink;
+    border-radius:10px 0 0 10px;
+    display:none;
+    font-size:.9em;
+    padding:5px;
+    position:fixed;
+    right:0;
+    width:150px;
+    z-index:300000;
+}
+
+#browser-warning-content a {
+    padding:5px;
+}
+
+#browser-warning-message {
+    margin:5px;
+}
+
+#browser-warning-close {
+    cursor:pointer;
+    font-size:1.8em;
+    margin-left:3px;
+    padding:0 5px;
+}
+
+#browser-warning-close:hover {
+    color:blue;
+    text-decoration:underline;
+}
+/* <-----------------------END---- BROWSER WARNING ------------------------------> */

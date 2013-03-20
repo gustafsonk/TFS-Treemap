@@ -1,0 +1,25 @@
+Task,Priority,Effort,Thoughts
+Fill out help section,High,High,Many ways to do this and many things to talk about.
+Add a confirm for delete,High,Medium,Saving has a confirm system but deletes do not. Also consider making the confirms better.
+Backup save file on server with a scheduled task,High,Low,Don't just store it on the server.
+Deal with how filters should get saved,Medium,Medium,New things added after a save are disabled by default. Maybe make an exception for certain types like themes since most people don't want new additions disabled by default.
+Deal with the distinction between New/Edit,Medium,Medium,"At what point is the settings a new treemap, or are you always editing an old one? Maybe make an Edit option and change some behaviors."
+General refactoring,Medium,Medium,"C# could be more clearer on the flows from class to class, a few of the bigger classes could be broken down even further, replace some switch's with classes using inheritance (no need for things like StorageManager), etc…"
+Pre-filtering sprints selected based on date,Medium,Medium,Would need to get more information from TFS and change how filtering loads.
+UI improvements for Chrome,Medium,Medium,"Make things look less squashed, make the text look better for exporting images."
+Add total effort for the root node,Medium,Low,"Probably just sum the efforts on the 2nd level of nodes, relates to problem of 'no effort' sizing as well."
+Auto-populate save name field with probable save name,Medium,Low,"A minor annoyance, relates to the problem of distinguishing the difference between New/Edit."
+Clicking on a PBI opens it up through Web Access,Medium,Low,Pop-up before redirect could be annoying but less jarring.
+Make config files for things like query GUIDs,Medium,Low,You shouldn't have to enter the code for project setup.
+Animation,Low,Very High,JIT animations are very buggy.
+Customizable X/Y box offsets,Low,Very High,Would interface with JIT.
+Make layout a per-level basis,Low,Very High,"Would interface with JIT, much more helpful than global layouts."
+Stop jsTree from locking the UI when populating the filter,Low,Very High,Usually only lasts 1-2 seconds. Due to the DOM manipulation needed and js being single-threaded. Web workers can't access the DOM either so not really sure how to fix this.
+Strip out JIT's label system and use canvas text instead,Low,Very High,DOM manipulation is slow and JIT using DOM nodes is the big reason why performance sucks and things visually break when there's too much to display.
+Vertical titles,Low,Very High,Would interface with JIT.
+Add scale coloring system,Low,High,Would be for coloring by quantitative measures instead of qualitative.
+Successor/predecessor system,Low,High,Maybe use the cell highlighting on mouse hover for this.
+Deal with 'no effort' sizing,Low,Medium,The default size right now is 1. There are many different 'solutions' to this.
+Bug: Tooltip shrinks when moving outside body,Low,Low,"JIT improved tooltips in a git commit, maybe look there to see how to fix."
+,,,
+,,,"Low = < 2 hours, Medium = 2 - 4 hours, High = 4 - 8 hours, Very High = > 8 hours"

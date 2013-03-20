@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Treemap</title>
+    <!-- The favicon. -->
+    <link rel="icon" href="favicon.ico" />
+
+    <!-- jQuery and jQuery UI. -->
+    <link rel="stylesheet" href="css/jquery-ui/trontastic/jquery-ui-1.10.2.min.css" />
+    <script src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery-ui/jquery-ui-1.10.2.min.js"></script>
+
+    <!-- https://github.com/fnagel/jquery-ui/commit/7932007dc5756b28cbdb6b824f0299a827c61fa8 -->
+    <link rel="stylesheet" href="css/jquery-ui/jquery.ui.selectmenu.css" />
+    <script src="js/jquery-ui/jquery.ui.selectmenu.js"></script> <!-- Removed href attributes due to URL fragment annoyances. -->
+
+    <!-- https://github.com/mleibman/SlickGrid/commit/4c48e038c6b50c1fda9bd11bc0a13ff6f3f4749d -->
+    <link rel="stylesheet" href="css/slickgrid/slick.grid.css" />
+    <script src="js/slickgrid/lib/jquery.event.drag-2.2.js"></script> <!-- Upgraded from SlickGrid's 2.0 lib to 2.2 for jQuery 1.9. -->
+    <script src="js/slickgrid/slick.core.js"></script>
+    <script src="js/slickgrid/slick.grid.js"></script> <!-- Removed a jQuery 1.9-incompatible IE fix. -->
+    <script src="js/slickgrid/my.editors.js"></script>
+    <script src="js/slickgrid/plugins/slick.checkboxselectcolumn.js"></script> <!-- MODIFIED (search for 'MODIFIED') -->
+    <script src="js/slickgrid/plugins/slick.rowselectionmodel.js"></script>
+    <script src="js/slickgrid/plugins/slick.rowmovemanager.js"></script> <!-- MODIFIED (search for 'MODIFIED') -->
+
+    <!-- https://github.com/vakata/jstree/archive/v.pre1.0.zip pre 1.0 fix 2 -->
+    <script src="js/jstree/jquery.jstree.js"></script>
+
+    <!-- http://www.quirksmode.org/js/detect.html Warn IE users of incompatibilites. -->
+    <script src="js/browserdetect/browserdetect.js"></script>
+
+    <!-- http://html2canvas.hertzen.com/build/html2canvas.js 0.4.0 -->
+    <script src="js/html2canvas/html2canvas.js"></script>
+
+    <!-- https://github.com/philogb/jit/commit/571cc88564ac8628b1e93018fd78cfa65ea3b38f python build.py Treemap > treemap-lib.js -->
+    <script src="js/treemap/treemap-lib.js"></script>
+
+    <!-- Run my stuff now that everything else is loaded. -->
+    <link rel="stylesheet" href="css/main/treemap.css" />
+    <script src="js/main/treemap.js"></script>
+</head>
+<body>
+    <!-- Toolbar. -->
+    <div id="toolbar" class="ui-widget ui-widget-content">
+
+        <!-- Toolbar header. -->
+        <div id="toolbar-header" class="ui-widget ui-widget-header ui-corner-all">Toolbar (G to Toggle)</div>
+
+        <!-- Toolbar menu. -->
+        <ul id="toolbar-menu">
+            <li id="toolbar-new"><a><span class="ui-icon ui-icon-document"></span>New</a></li>
+            <li id="toolbar-load"><a><span class="ui-icon ui-icon-folder-open"></span>Load</a></li>
+            <li id="toolbar-save" class="ui-state-disabled"><a><span class="ui-icon ui-icon-disk"></span>Save</a></li>
+            <li id="toolbar-image" class="ui-state-disabled"><a><span class="ui-icon ui-icon-print"></span>Export</a></li>
+            <li id="toolbar-help"><a><span class="ui-icon ui-icon-help"></span>Help</a></li>
+        </ul>
+
+        <!-- Level/Label Settings. -->
+        <fieldset class="toolbar-hidable">
+            <legend>Show/Hide Data</legend>
+            <table class="table-default">
+                <tr>
+                    <td class="right">
+                        <label>Show up to:</label>
+                    <td>
+                        <select id="depth-setting" onchange="setDepth(this.options[this.selectedIndex].value)">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <label>Label up to:</label>
+                    <td>
+                        <select id="label-setting" onchange="setLabels(this.options[this.selectedIndex].value)">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="center">
+                        <input type="checkbox" id="velocity" onclick="setVelocityFlag(!isVelocityFlag);fullRefresh(currentDepth)" />
+                        <label for="velocity">Flag Velocity</label>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+        <!-- Layout settings. -->
+        <fieldset class="toolbar-hidable">
+            <legend>Layout</legend>
+            <div id="layout-buttons" class="center radio-buttons">
+                <input type="radio" name="look" id="square" onclick="setLayout('square')" />
+                <label for="square" title="Squares">
+                    <span class="custom-icon square"></span>
+                </label>
+                <input type="radio" name="look" id="row" onclick="setLayout('row')" checked="checked" />
+                <label for="row" title="Rows">
+                    <span class="custom-icon row"></span>
+                </label>
+                <input type="radio" name="look" id="column" onclick="setLayout('column')" />
+                <label for="column" title="Columns">
+                    <span class="custom-icon column"></span>
+                </label>
+            </div>
+        </fieldset>
+
+        <!-- Size settings. -->
+        <fieldset class="toolbar-hidable">
+            <legend>Size</legend>
+            <div id="size-buttons" class="center radio-buttons">
+                <input type="radio" name="size" id="fullscreen" checked="checked" onclick="setFullScreen(true)" />
+                <label for="fullscreen">Fullscreen</label>
+                <input type="radio" name="size" id="custom" onclick="setFullScreen(false)" />
+                <label for="custom">Custom</label>
+            </div>
+            <table id="size-table" class="table-default">
+                <tr>
+                    <td class="right">
+                        <label class="ui-state-disabled">Width:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="width-box" class="ui-textfield right ui-corner-all ui-state-disabled" size="3" disabled="disabled" onkeypress="return isNumber(event)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right">
+                        <label class="ui-state-disabled">Height:</label>
+                    </td>
+                    <td>
+                        <input type="text" id="height-box" class="ui-textfield right ui-corner-all ui-state-disabled" size="3" disabled="disabled" onkeypress="return isNumber(event)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="center">
+                            <button id="tree-resize" class="icon-button" disabled="disabled" onclick="resize()">Resize</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    
+    <!-- Breadcrumb trail and treemap. -->
+    <div id="main">
+        <div id="breadcrumb">
+            <ul id="breadcrumb-list" class="ui-helper-clearfix"></ul> <!-- ui-helper-clearfix removes some pre-existing styles. -->
+        </div>
+        <div id="treemap"></div>
+    </div>
+
+    <!-- Browser warning for IE. -->
+    <div id="browser-warning">
+        <div id="browser-warning-content" class="center">
+            <div id="browser-warning-message">
+                Please use any of these up-to-date browsers:
+            </div>
+            <table class="table-default">
+                <tr>
+                    <td>
+                        <a href="http://www.google.com/chrome">Chrome</a>
+                    </td>
+                    <td>
+                        <a href="http://www.mozilla.com/firefox">Firefox</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="http://www.apple.com/safari">Safari</a>
+                    </td>
+                    <td>
+                        <a href="http://www.opera.com/">Opera</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <span id="browser-warning-close" onclick="removeBrowserWarning()">x</span>
+    </div>
+
+    <!-- Loading screen. -->
+    <div id="loading" class="center">
+        <img src="css/main/loading.gif" alt="(<..." /> <!-- Pac-man ASCII art. -->
+        <br />
+        <span id="loading-message"></span>
+    </div>
+
+    <!-- ui-helper-hidden helps hide the dialogs when they're being initialized. -->
+    <!-- New dialog. -->
+    <div id="build-dialog" class="ui-helper-hidden"> 
+        <div id="accordion">
+            <h3>Select, Order, & Customize Groupings</h3>
+            <div id="slick-grid"></div>
+            <h3>Edit Filters</h3>
+            <div id="jstree-filter"></div>
+        </div>
+        <div class="center">
+            <button id="tree-build" class="icon-button" onclick="dialogRequestTreeBuild()">Draw Treemap</button>
+        </div>
+    </div>
+
+    <!-- Load dialog. -->
+    <div id="load-dialog" class="ui-helper-hidden">
+        <div id="jstree-load">
+        </div>
+        <div class="center">
+            <button id="tree-delete" class="icon-button" onclick="deleteState()">Delete</button>
+            <button id="tree-load" class="icon-button" onclick="loadState()">Load</button>
+        </div>
+    </div>
+
+    <!-- Save dialog. -->
+    <div id="save-dialog" class="ui-helper-hidden">
+        <div class="center">
+            <input type="text" id="save-name" class="text ui-textfield ui-corner-all" size="35" onkeyup="handleSaveKeys(event)" />
+            <div id="save-error-message"></div>
+            <button id="tree-save" class="icon-button" onclick="saveState()">Save</button>
+        </div>
+    </div>
+
+    <!-- Export dialog. -->
+    <div id="export-dialog" class="ui-helper-hidden">
+        Generating image... <a id="export-link"></a>
+    </div>
+
+    <!-- Help dialog. -->
+    <div id="help-dialog" class="ui-helper-hidden">
+        <table class="table-default">
+            <tr>
+                <td class="right">
+                    <label>Left-click:</label>
+                </td>
+                <td>Zoom in</td>
+            </tr>
+            <tr>
+                <td class="right">
+                    <label>Right-click:</label>
+                </td>
+                <td>Zoom out</td>
+            </tr>
+        </table>
+        <br />
+        <div class="center">
+            Contact <a href="mailto:cgustak@jci.com">cgustak@jci.com</a> for more help.
+        </div>
+    </div>
+</body>
+</html>
