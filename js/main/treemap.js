@@ -578,44 +578,59 @@ function updateTable(settings) {
     // Get the old build settings and order.
     var rows = slickGrid.getData();
 
-    // Special case with no data selected.
-    if (settings.type !== '') {
-        // Get the saved attributes for each saved row.
-        var types = settings.type.split('-');
-        var colors = settings.$color.split('-');
-        var sizes = settings.size.split('-');
-        var sorts = settings.sort.split('-');
+    // Get the new build settings.
+    var types, colors, sizes, sorts;
+    if (settings.type !== '') { // Special case with no data selected.
+        types = settings.type.split('-');
+        colors = settings.$color.split('-');
+        sizes = settings.size.split('-');
+        sorts = settings.sort.split('-');
     }
 
-    // Update each row's settings.
+    // Set the new build settings and order.
     var selectedRows = [];
-    $.each(rows, function (oldIndex, row) {
-        // Find the row's new location, if needed.
-        var newIndex = $.inArray(row.group, types);
-        if (newIndex !== -1) {
-            // Load the saved attributes for each saved row.
-            row.color = colors[newIndex];
-            row.size = sizes[newIndex];
-            row.sort = sorts[newIndex];
+    $.each(types, function (newIndex, type) {
+        // Get the saved attributes for each type.
+        var newColor = colors[newIndex];
+        var newSize = sizes[newIndex];
+        var newSort = sorts[newIndex];
 
-            // If it needs to swap and it's movable...
-            if (newIndex !== oldIndex && row.order !== 'N/A') {
-                // ...swap the rows, making a shallow copy.
-                var tempRow = $.extend({}, rows[newIndex]);
-                rows[newIndex] = row;
-                rows[oldIndex] = tempRow;
+        // Iterate through the rows in the table until the right row is found.
+        var oldIndex;
+        var rowToMove;
+        $.each(rows, function (rowIndex, row) {
+            if (row.group === type) {
+                // Overwrite the row's old attributes with the new attributes.
+                row.color = newColor;
+                row.size = newSize;
+                row.sort = newSort;
 
-                // Select the row using the new index.
-                selectedRows.push(newIndex);
+                // Save the index and row.
+                oldIndex = rowIndex;
+                rowToMove = row;
+
+                // Stop iterating.
+                return;
             }
-            else {
-                // Select the row using the old index.
-                selectedRows.push(oldIndex);
-            }
+        });
+
+        // If it needs to swap and it's movable...
+        if (newIndex !== oldIndex && rowToMove.order !== 'N/A') {
+            // ...swap the rows, making a shallow copy.
+            var otherRow = $.extend({}, rows[newIndex]);
+            rows[newIndex] = rowToMove;
+            rows[oldIndex] = otherRow;
+
+            // Row moved so use the new index to select the row.
+            selectedRows.push(newIndex);
+        }
+        else {
+            // Row didn't move so use the old index to select the row.
+            selectedRows.push(oldIndex);
         }
     });
 
-    // Update the building table.
+    // Update the building table with the new settings.
     slickGrid.setData(rows);
     slickGrid.setSelectedRows(selectedRows);
     slickGrid.render();
