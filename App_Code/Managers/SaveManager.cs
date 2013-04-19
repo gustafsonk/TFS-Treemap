@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using App_Code.Objects;
+using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Handles saving trees and retrieving saved trees.

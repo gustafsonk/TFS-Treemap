@@ -2,7 +2,7 @@
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Establishes connections to TFS 2010 and retrieves collections of work items.

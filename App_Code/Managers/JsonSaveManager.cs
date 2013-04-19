@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using App_Code.Objects;
+using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Creates JSON strings for saves.
@@ -62,7 +62,7 @@ namespace App_Code.Managers
         /// </summary>
         static List<object> ParseSaves(string oldJson)
         {
-            return (List<object>)fastJSON.JSON.Instance.Parse(oldJson);
+            return (List<object>)App_Code.fastJSON.JSON.Instance.Parse(oldJson);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace App_Code.Managers
             oldSaves = oldSaves.OrderBy(dictionary => ((Dictionary<string, object>)dictionary)["data"]).ToList();
 
             // Reserialize the saves.
-            var saveJson = fastJSON.JSON.Instance.ToJSON(oldSaves);
+            var saveJson = App_Code.fastJSON.JSON.Instance.ToJSON(oldSaves);
 
             return saveJson;
         }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using App_Code.Objects;
+using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Sorts the data prior to object serialization.

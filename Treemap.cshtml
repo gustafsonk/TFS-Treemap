@@ -79,7 +79,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="center">
-                        <input type="checkbox" id="velocity" onclick="setVelocityFlag(!isVelocityFlag);fullRefresh(currentDepth)" />
+                        <input type="checkbox" id="velocity" onclick="setVelocityFlag(!isVelocityFlag);fullRefresh(currentDepth);" />
                         <label for="velocity">Flag Velocity</label>
                     </td>
                 </tr>
@@ -212,7 +212,7 @@
     <!-- Save dialog. -->
     <div id="save-dialog" class="ui-helper-hidden">
         <div class="center">
-            <input type="text" id="save-name" class="text ui-textfield ui-corner-all" size="35" onkeyup="handleSaveKeys(event)" />
+            <input type="text" id="save-name" class="ui-textfield ui-corner-all" size="35" onkeyup="handleSaveKeys(event)" />
             <div id="save-error-message"></div>
             <button id="tree-save" class="icon-button" onclick="saveState()">Save</button>
         </div>

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
-using App_Code.Objects;
+using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Handles properties associated with each item in the main tree collection.

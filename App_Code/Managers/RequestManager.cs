@@ -1,6 +1,6 @@
-﻿using App_Code.Objects;
+﻿using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Handles data requests from RequestController and creates the global storage for shared variables and methods.
@@ -64,10 +64,10 @@ namespace App_Code.Managers
         {
             // Turn off C#-related data since I only care about properties and values.
             // The current version being used is a slightly modified 2.0.13, search files for '!TREEMAP'.
-            fastJSON.JSON.Instance.Parameters.UseExtensions = false;
+            App_Code.fastJSON.JSON.Instance.Parameters.UseExtensions = false;
 
             // No need to JSONify unused values.
-            fastJSON.JSON.Instance.Parameters.SerializeNullValues = false;
+            App_Code.fastJSON.JSON.Instance.Parameters.SerializeNullValues = false;
         }
 
         /// <summary>

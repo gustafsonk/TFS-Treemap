@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Sizes tree nodes.

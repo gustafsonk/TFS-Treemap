@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Creates JSON strings for filters.
@@ -60,7 +60,7 @@ namespace App_Code.Managers
             }
 
             // Serialize our filter list into a JSON string.
-            var json = fastJSON.JSON.Instance.ToJSON(filtersToConvert);
+            var json = App_Code.fastJSON.JSON.Instance.ToJSON(filtersToConvert);
 
             return json;
         }

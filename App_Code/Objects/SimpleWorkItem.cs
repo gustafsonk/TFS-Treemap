@@ -1,6 +1,6 @@
-﻿using App_Code.Managers;
+﻿using Managers;
 
-namespace App_Code.Objects
+namespace Objects
 {
     /// <summary>
     /// Represents a work item with only relevant information.

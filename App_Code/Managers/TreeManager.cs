@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using App_Code.Objects;
+using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Pulls information from PBIs into a singular tree structure.

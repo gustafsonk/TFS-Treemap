@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.Mvc;
-using App_Code.Managers;
-using App_Code.Objects;
+using Managers;
+using Objects;
 
-namespace App_Code.Controllers
+namespace Controllers
 {
     /// <summary>
     /// All threads (people requesting the page) begin here for accessing the data.

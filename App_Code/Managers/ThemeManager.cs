@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Handles the theme level in the tree specifically when needed.
@@ -49,7 +49,7 @@ namespace App_Code.Managers
 
             // Find the closest leading instance of the relevant HTML attribute to the identifier.
             const string htmlColorPrefix = "BACKGROUND-COLOR: ";
-            var htmlColorStart = html.LastIndexOf(htmlColorPrefix, identifierStart);
+            var htmlColorStart = html.LastIndexOf(htmlColorPrefix, identifierStart, StringComparison.Ordinal);
             if (htmlColorStart == -1)
             {
                 return string.Empty;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Handles determining and using filters.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace App_Code.Objects
+namespace Objects
 {
     /// <summary>
     /// Represents save data compatible with jsTree.

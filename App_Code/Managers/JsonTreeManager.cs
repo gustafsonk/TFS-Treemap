@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
-using App_Code.Objects;
+using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Creates JSON strings for trees.
@@ -24,13 +25,13 @@ namespace App_Code.Managers
         internal string ConvertTreeToJson()
         {
             // Make initial node.
-            var root = new Node { children = new List<Node>(), data = new Data(1f, "#FFFFFF", 0), id = _globalManager.TreeLevels.Count.ToString(), name = GetCollectionTitle() };
+            var root = new Node { children = new List<Node>(), data = new Data(1f, "#FFFFFF", 0), id = _globalManager.TreeLevels.Count.ToString(CultureInfo.InvariantCulture), name = GetCollectionTitle() };
 
             // Recursively build our JSON objects.
             RecursiveBuild(SortManager.SortCollection(_globalManager.Tree, _globalManager.TreeLevels[0], _globalManager.SortLevels[0]), root, "");
 
             // Serialize the nested collection into a JSON string.
-            var json = fastJSON.JSON.Instance.ToJSON(root);
+            var json = App_Code.fastJSON.JSON.Instance.ToJSON(root);
 
             return json;
         }
@@ -62,7 +63,7 @@ namespace App_Code.Managers
                 switch (groupLevel)
                 {
                     case "Sprint": // Needs to happen here for sorting by key purposes before this.
-                        var sprintIndex = groupKey.IndexOf("Sprint");
+                        var sprintIndex = groupKey.IndexOf("Sprint", StringComparison.Ordinal);
                         nodeName = sprintIndex == -1 ? groupKey : groupKey.Substring(sprintIndex);
                         break;
                     case "Quarter":

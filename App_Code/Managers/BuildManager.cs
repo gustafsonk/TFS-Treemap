@@ -1,4 +1,4 @@
-﻿namespace App_Code.Managers
+﻿namespace Managers
 {
     /// <summary>
     /// Main class that begins and finishes the process of building representative JSON strings.

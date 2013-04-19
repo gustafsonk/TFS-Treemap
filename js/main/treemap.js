@@ -418,7 +418,7 @@ function showDownload(canvas) {
     var dataUrl = canvas.toDataURL();
 
     // Check if the HTML5 download attribute is supported.
-    var linkText = '';
+    var linkText;
     if ('download' in $('#export-link')[0]) {
         // Supported, just make a hyperlink.
         linkText = 'Download';
@@ -479,10 +479,10 @@ function initLoadTree() {
 
         // Make the anchors function like buttons.
         $('#jstree-load a').removeAttr('href')
-        .click(function (e) {
+        .click(function () {
             enableButton('#tree-delete,#tree-load');
         })
-        .dblclick(function (e) {
+        .dblclick(function () {
             // Request a tree load.
             loadState($(this.parentElement));
         });
@@ -1155,7 +1155,7 @@ function initRowEditing() {
     });
 
     // Destroy the editor on mouse leave for the dropdowns.
-    slickGrid.onMouseLeave.subscribe(function (e, args) {
+    slickGrid.onMouseLeave.subscribe(function (e) {
         // The relatedTarget check is for dealing with slickgrid's way of entering 'edit mode'.
         if (e.relatedTarget !== undefined && $('.ui-selectmenu-open').length === 0) {
             slickGrid.resetActiveCell();
@@ -1172,6 +1172,7 @@ function initRowEditing() {
         if ($.inArray(args.row, slickGrid.getSelectedRows()) === -1) {
             return false;
         }
+        return true;
     });
 }
 
@@ -1186,7 +1187,7 @@ function editActiveCell(e, args) {
     // Change the editor to a jQuery UI type.
     var column = args.grid.getColumns()[cell.cell];
     $('#edit-select').selectmenu({ width: column.width - 3 })
-    .change(function (e) {
+    .change(function () {
         editor.applyValue(slickGrid.getDataItem(cell.row), e.target.value);
         editor.destroy();
         slickGrid.resetActiveCell();
@@ -1492,8 +1493,8 @@ function resize() {
     else { // Get the values from the boxes.
         $('body').css('position', ''); // Bug fix: turn scrollbars back on.
 
-        widthBoxValue = Number(widthBox.value);
-        heightBoxValue = Number(heightBox.value);
+        var widthBoxValue = Number(widthBox.value);
+        var heightBoxValue = Number(heightBox.value);
 
         // The upper limit of 8192 will work in Firefox. Other browsers have no set limit, but are unreliable.
         if (widthBoxValue > 8192) {

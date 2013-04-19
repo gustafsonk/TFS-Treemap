@@ -1,8 +1,8 @@
 ﻿using System;
-using App_Code.Objects;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
+using Objects;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Turns a TFS WorkItem into a SimpleWorkItem.

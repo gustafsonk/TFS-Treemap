@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace App_Code.Managers
+namespace Managers
 {
     /// <summary>
     /// Colors tree nodes.
