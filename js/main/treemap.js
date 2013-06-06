@@ -106,7 +106,7 @@ function initTreeMap(json) {
             enable: true,
             offsetX: 20,
             offsetY: 20,
-            onShow: function (tip, node, isLeaf, domElement) {
+            onShow: function (tip, node) {
                 // Represents the node's type.
                 var prefix = node.id.charAt(0);
                 var type = getTypeFromPrefix(prefix);
@@ -484,7 +484,7 @@ function initLoadTree() {
         })
         .dblclick(function () {
             // Request a tree load.
-            loadState($(this.parentElement));
+            loadState();
         });
     })
     .jstree({
@@ -514,7 +514,7 @@ function deleteState() {
     }
 
     // Get the selected node.
-    node = $('#jstree-load').jstree('get_selected');
+    var node = $('#jstree-load').jstree('get_selected');
 
     // Grab the name of the single entry.
     var name = node[0].textContent.substr(1);
@@ -538,11 +538,8 @@ function deleteState() {
 }
 
 // Rebuilds the treemap using a saved state.
-function loadState(node) {
-    // Through a double-click or enter key.
-    if (node === undefined) {
-        node = $('#jstree-load').jstree('get_selected');
-    }
+function loadState() {
+    var node = $('#jstree-load').jstree('get_selected');
 
     // Get the selected tree's settings.
     var settings = node.data();
@@ -579,7 +576,7 @@ function updateTable(settings) {
     var rows = slickGrid.getData();
 
     // Get the new build settings.
-    var types, colors, sizes, sorts;
+    var types = undefined, colors, sizes, sorts;
     if (settings.type !== '') { // Special case with no data selected.
         types = settings.type.split('-');
         colors = settings.$color.split('-');
@@ -1188,7 +1185,7 @@ function editActiveCell(e, args) {
     var column = args.grid.getColumns()[cell.cell];
     $('#edit-select').selectmenu({ width: column.width - 3 })
     .change(function () {
-        editor.applyValue(slickGrid.getDataItem(cell.row), e.target.value);
+        editor.applyValue(slickGrid.getDataItem(cell.row), e.target.firstChild.value);
         editor.destroy();
         slickGrid.resetActiveCell();
     });
@@ -1413,7 +1410,7 @@ function setDropDowns(levels) {
     }
 
     // (re)Build the jQuery UI elements.
-    $('#depth-setting,#label-setting').selectmenu();
+    $('#depth-setting,#label-setting').selectmenu({ 'width': 75 });
 }
 /* <-----------------------END---- DYNAMIC DROPDOWNS ------------------------------> */
 
@@ -1709,6 +1706,7 @@ function initUIElements() {
     initLayoutButtons();
     initDialogs();
     initAccordion();
+    $('#toolbar').show();
 }
 
 // Make the toolbar menu look nice and work.
@@ -1725,7 +1723,6 @@ function initMenu() {
                     break;
                 case 'toolbar-save':
                     openSaveDialog();
-                    $('#toolbar-menu').menu('blur'); // jQuery UI input focus bug fix part 1/2
                     break;
                 case 'toolbar-image':
                     openExportDialog();
@@ -1736,7 +1733,7 @@ function initMenu() {
                     break;
             }
         },
-        blur: function (event, ui) { // jQuery UI input focus bug fix part 2/2
+        blur: function () { // Bug fix: jQuery UI prevents the input from getting focus
             if ($('#save-dialog').dialog('isOpen')) {
                 $('#save-name').focus();
             }
@@ -1930,20 +1927,15 @@ function initAccordion() {
 
 
 /* <----------------------BEGIN--- BAD BROWSER WARNING ------------------------------> */
-// Display an incompatibility warning if it's IE.
+// Display an incompatibility warning and prevent using the site if canvas is unavailable.
 function isBrowserUnsupported() {
-    if (BrowserDetect.browser === 'Explorer') {
+    var canvasUnsupported = !window.HTMLCanvasElement;
+    
+    if (canvasUnsupported) {
         $('#browser-warning').show();
-        if (BrowserDetect.version >= 9) { // Future proofed.
-            $('#browser-warning-message').prepend('<p>Your browser is not good.</p>');
-            return false;
-        }
-        else if (BrowserDetect.version < 9) {
-            $('#browser-warning-message').prepend('<p>Your browser is too old.</p>');
-            return true;
-        }
     }
-    return false;
+
+    return canvasUnsupported;
 }
 
 // Handle the closing of the warning.

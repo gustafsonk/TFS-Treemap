@@ -1,49 +1,46 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8" />
     <title>Treemap</title>
     <!-- The favicon. -->
     <link rel="icon" href="favicon.ico" />
 
     <!-- jQuery and jQuery UI. -->
-    <link rel="stylesheet" href="css/jquery-ui/trontastic/jquery-ui-1.10.2.min.css" />
-    <script src="js/jquery/jquery-1.9.1.min.js"></script>
-    <script src="js/jquery-ui/jquery-ui-1.10.2.min.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui/trontastic/jquery-ui-1.10.3.min.css" />
+    <script src="js/jquery/jquery-1.10.1.min.js"></script>
+    <script src="js/jquery-ui/jquery-ui-1.10.3.min.js"></script>
 
-    <!-- https://github.com/fnagel/jquery-ui/commit/7932007dc5756b28cbdb6b824f0299a827c61fa8 -->
-    <link rel="stylesheet" href="css/jquery-ui/jquery.ui.selectmenu.css" />
-    <script src="js/jquery-ui/jquery.ui.selectmenu.js"></script> <!-- Removed href attributes due to URL fragment annoyances. -->
+    <!-- https://github.com/fnagel/jquery-ui/commit/e6f1e9d0e99c524030066d890b67c1118f3da150 -->
+    <link rel="stylesheet" href="css/jquery-ui/jquery.ui.selectmenu.css?1" />
+    <script src="js/jquery-ui/jquery.ui.selectmenu.js?1"></script> <!-- Removed href attributes due to URL fragment annoyances. -->
 
-    <!-- https://github.com/mleibman/SlickGrid/commit/4c48e038c6b50c1fda9bd11bc0a13ff6f3f4749d -->
-    <link rel="stylesheet" href="css/slickgrid/slick.grid.css" />
-    <script src="js/slickgrid/lib/jquery.event.drag-2.2.js"></script> <!-- Upgraded from SlickGrid's 2.0 lib to 2.2 for jQuery 1.9. -->
-    <script src="js/slickgrid/slick.core.js"></script>
-    <script src="js/slickgrid/slick.grid.js"></script> <!-- Removed a jQuery 1.9-incompatible IE fix. -->
-    <script src="js/slickgrid/my.editors.js"></script>
-    <script src="js/slickgrid/plugins/slick.checkboxselectcolumn.js"></script> <!-- MODIFIED (search for 'MODIFIED') -->
-    <script src="js/slickgrid/plugins/slick.rowselectionmodel.js"></script>
-    <script src="js/slickgrid/plugins/slick.rowmovemanager.js"></script> <!-- MODIFIED (search for 'MODIFIED') -->
+    <!-- https://github.com/mleibman/SlickGrid/commit/76dd8364a28d8705456896e2f7ec6077cc974054 -->
+    <link rel="stylesheet" href="css/slickgrid/slick.grid.css?1" />
+    <script src="js/slickgrid/lib/jquery.event.drag-2.2.js"></script>
+    <script src="js/slickgrid/slick.core.js?1"></script>
+    <script src="js/slickgrid/slick.grid.js?1"></script>
+    <script src="js/slickgrid/my.editors.js?1"></script>
+    <script src="js/slickgrid/plugins/slick.checkboxselectcolumn.js?1"></script> <!-- MODIFIED (search for 'MODIFIED') -->
+    <script src="js/slickgrid/plugins/slick.rowselectionmodel.js?1"></script>
+    <script src="js/slickgrid/plugins/slick.rowmovemanager.js?1"></script> <!-- MODIFIED (search for 'MODIFIED') -->
 
     <!-- https://github.com/vakata/jstree/archive/v.pre1.0.zip pre 1.0 fix 2 -->
-    <script src="js/jstree/jquery.jstree.js"></script>
-
-    <!-- http://www.quirksmode.org/js/detect.html Warn IE users of incompatibilites. -->
-    <script src="js/browserdetect/browserdetect.js"></script>
+    <script src="js/jstree/jquery.jstree.js?1"></script>
 
     <!-- http://html2canvas.hertzen.com/build/html2canvas.js 0.4.0 -->
-    <script src="js/html2canvas/html2canvas.js"></script>
+    <script src="js/html2canvas/html2canvas.js?1"></script>
 
-    <!-- https://github.com/philogb/jit/commit/571cc88564ac8628b1e93018fd78cfa65ea3b38f python build.py Treemap > treemap-lib.js -->
-    <script src="js/treemap/treemap-lib.js"></script>
+    <!-- https://github.com/philogb/jit/commit/97ead84bdf8bb2cf1eba4745cbe4a93f96e4819a python build.py Treemap > treemap-lib.js -->
+    <script src="js/treemap/treemap-lib.js?1"></script>
 
     <!-- Run my stuff now that everything else is loaded. -->
-    <link rel="stylesheet" href="css/main/treemap.css" />
-    <script src="js/main/treemap.js"></script>
+    <link rel="stylesheet" href="css/main/treemap.css?1" />
+    <script src="js/main/treemap.js?1"></script>
 </head>
 <body>
     <!-- Toolbar. -->
-    <div id="toolbar" class="ui-widget ui-widget-content">
+    <div id="toolbar" class="ui-widget ui-widget-content" style="display:none">
 
         <!-- Toolbar header. -->
         <div id="toolbar-header" class="ui-widget ui-widget-header ui-corner-all">Toolbar (G to Toggle)</div>
@@ -142,17 +139,10 @@
         </fieldset>
     </div>
     
-    <!-- Breadcrumb trail and treemap. -->
-    <div id="main">
-        <div id="breadcrumb">
-            <ul id="breadcrumb-list" class="ui-helper-clearfix"></ul> <!-- ui-helper-clearfix removes some pre-existing styles. -->
-        </div>
-        <div id="treemap"></div>
-    </div>
-
-    <!-- Browser warning for IE. -->
+    <!-- Browser warning mostly for old IE. -->
     <div id="browser-warning">
         <div id="browser-warning-content" class="center">
+            <p>Your browser is not supported.</p>
             <div id="browser-warning-message">
                 Please use any of these up-to-date browsers:
             </div>
@@ -177,12 +167,20 @@
         </div>
         <span id="browser-warning-close" onclick="removeBrowserWarning()">x</span>
     </div>
-
+    
     <!-- Loading screen. -->
     <div id="loading" class="center">
         <img src="css/main/loading.gif" alt="(<..." /> <!-- Pac-man ASCII art. -->
         <br />
         <span id="loading-message"></span>
+    </div>
+
+    <!-- Breadcrumb trail and treemap. -->
+    <div id="main">
+        <div id="breadcrumb">
+            <ul id="breadcrumb-list" class="ui-helper-clearfix"></ul> <!-- ui-helper-clearfix removes some pre-existing styles. -->
+        </div>
+        <div id="treemap"></div>
     </div>
 
     <!-- ui-helper-hidden helps hide the dialogs when they're being initialized. -->

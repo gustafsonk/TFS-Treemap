@@ -2,6 +2,7 @@ Task,Priority,Effort,Thoughts
 Fill out help section,High,High,Many ways to do this and many things to talk about.
 Add a confirm for delete,High,Medium,Saving has a confirm system but deletes do not. Also consider making the confirms better.
 Backup save file on server with a scheduled task,High,Low,Don't just store it on the server.
+Bug: IE requires specifically clicking on the text for a node,Medium,Medium,May be a simple fix in JIT or not possible in IE.
 Deal with how filters should get saved,Medium,Medium,New things added after a save are disabled by default. Maybe make an exception for certain types like themes since most people don't want new additions disabled by default.
 Deal with the distinction between New/Edit,Medium,Medium,"At what point is the settings a new treemap, or are you always editing an old one? Maybe make an Edit option and change some behaviors."
 General refactoring,Medium,Medium,"C# could be more clearer on the flows from class to class, a few of the bigger classes could be broken down even further, replace some switch's with classes using inheritance (no need for things like StorageManager), etc…"

@@ -133,6 +133,7 @@ fieldset {
 .title-label {
     text-overflow:ellipsis;
     white-space:nowrap;
+    word-wrap:normal; /* IE9/10 needs this. */
 }
 /* <-----------------------END---- TREEMAP ------------------------------> */
 
